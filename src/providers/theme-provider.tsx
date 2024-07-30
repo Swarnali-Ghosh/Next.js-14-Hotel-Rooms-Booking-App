@@ -6,11 +6,11 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
         <div>
             <ConfigProvider
                 theme={{
-                    token: {
+                    token: {   // If you want to change something in the global level across the application, you have to use the token 
                         colorPrimary: '#000',
                         borderRadius: 1
                     },
-                    components: {
+                    components: { // If you want to change anything for specific component, you have to use the components property. 
                         Button: {
                             controlHeight: 42,
                             defaultBorderColor: '#000'
