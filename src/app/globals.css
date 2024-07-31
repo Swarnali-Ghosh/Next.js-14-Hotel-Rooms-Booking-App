@@ -26,3 +26,12 @@
 .bg-color {
     background-color: #E0C3FC;
 }
+
+.cl-formButtonPrimary {
+    background-color: black !important;
+    color: white !important;
+}
+
+.ant-form-item {
+    margin-bottom: 0px !important;
+}

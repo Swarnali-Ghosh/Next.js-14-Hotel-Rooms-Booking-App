@@ -49,7 +49,7 @@ const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
     return (
         <div>
             <Header loggedInUserData={loggedInUserData} />
-            <div className='lg:px-20'>
+            <div className='lg:px-20 mt-5'>
                 {children}
             </div>
         </div>
