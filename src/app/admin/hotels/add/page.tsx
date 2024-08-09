@@ -7,7 +7,7 @@ function AddHotelPage() {
         <div>
             <PageTitle title="Add Hotel" />
             <HotelForm
-            // type="add"
+                type="add"
             />
         </div>
     );
