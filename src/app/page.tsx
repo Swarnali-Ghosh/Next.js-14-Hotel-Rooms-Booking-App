@@ -1,3 +1,6 @@
+import { Suspense } from "react";
+import RoomsData from "./_common/rooms-data";
+import Spinner from "@/components/spinner";
 import { connectMongoDB } from "@/config/db";
 import { UserType } from "@/interfaces";
 import { GetCurrentUserFromMongoDB } from "@/server-actions/users";
@@ -30,8 +33,12 @@ export default async function Home() {
   // let email = currentUserData?.emailAddresses[0].emailAddress;
 
   return (
-    <div className="">
-      Home
-    </div>
+    <Suspense fallback={<Spinner fullHeight />}
+    // key={suspenseKey}
+    >
+      <RoomsData
+      //  searchParams={searchParams}
+      />
+    </Suspense>
   );
 }
