@@ -1,8 +1,9 @@
+"use server";
 import { connectMongoDB } from "@/config/db";
-import BookingModel from "@/models/booking-model";
 import { GetCurrentUserFromMongoDB } from "./users";
 import { revalidatePath } from "next/cache";
 import RoomModel from "@/models/room-model";
+import BookingModel from "@/models/booking-model";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -20,29 +21,40 @@ export const CheckRoomAvailability = async ({
 }) => {
     try {
 
+        console.log(roomId,
+            reqCheckInDate,
+            reqCheckOutDate);
+
+        const reqCheckInDateObj = new Date(reqCheckInDate);
+        const reqCheckOutDateObj = new Date(reqCheckOutDate);
+
+
         const bookedSlots = await BookingModel.findOne({
             room: roomId,
             $or: [
                 {
                     checkInDate: {
-                        $gte: reqCheckInDate,
-                        $lte: reqCheckOutDate,
+                        $gte: reqCheckInDateObj,
+                        $lte: reqCheckOutDateObj,
                     },
                 },
                 {
                     checkOutDate: {
-                        $gte: reqCheckInDate,
-                        $lte: reqCheckOutDate,
+                        $gte: reqCheckInDateObj,
+                        $lte: reqCheckOutDateObj,
                     },
                 },
                 {
                     $and: [
-                        { checkInDate: { $lte: reqCheckInDate } },
-                        { checkOutDate: { $gte: reqCheckOutDate } },
+                        { checkInDate: { $lte: reqCheckInDateObj } },
+                        { checkOutDate: { $gte: reqCheckOutDateObj } },
                     ],
                 },
             ],
         });
+
+
+        console.log("bookedSlots", bookedSlots);
 
         if (bookedSlots) {
             // means slot is already booked
@@ -94,9 +106,9 @@ export const CancelBooking = async ({
         console.log("paymentId", paymentId);
 
         // change the status of the booking to cancelled
-        // await BookingModel.findByIdAndUpdate(bookingId, {
-        //     bookingStatus: "Cancelled",
-        // });
+        await BookingModel.findByIdAndUpdate(bookingId, {
+            bookingStatus: "Cancelled",
+        });
 
         // refund the payment
 

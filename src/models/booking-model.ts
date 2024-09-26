@@ -51,4 +51,5 @@ if (mongoose.models && mongoose.models["bookings"]) {
 }
 
 const BookingModel = mongoose.model("bookings", bookingSchema);
+console.log(BookingModel);
 export default BookingModel;

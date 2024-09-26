@@ -14,6 +14,7 @@ function CancelBookingModal({
     setShowCancelBookingModal: (show: boolean) => void;
 }) {
     const [loading, setLoading] = React.useState(false);
+
     const onCancelBooking = async () => {
         try {
             setLoading(true);

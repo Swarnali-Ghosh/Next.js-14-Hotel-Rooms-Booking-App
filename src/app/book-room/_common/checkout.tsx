@@ -25,13 +25,18 @@ function Checkout({ room }: { room: RoomType }) {
 
     const checkAvailability = async () => {
         try {
+            console.log("checkAvailability", checkAvailability);
+            console.log("room._id", room._id);
+            console.log("checkIn", checkIn);
+            console.log("checkOut", checkOut);
+
             const response = await CheckRoomAvailability({
                 roomId: room._id,
                 reqCheckInDate: checkIn,
                 reqCheckOutDate: checkOut,
             });
 
-            console.log("response.success", response.success)
+            console.log("response.success", response)
             if (response.success) {
                 setIsAvailable(true);
                 message.success("Room is available");
