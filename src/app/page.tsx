@@ -5,9 +5,10 @@ import { connectMongoDB } from "@/config/db";
 import { UserType } from "@/interfaces";
 import { GetCurrentUserFromMongoDB } from "@/server-actions/users";
 import { UserButton, currentUser } from "@clerk/nextjs";
+import Filters from "./_common/filters";
 connectMongoDB();
 
-export default async function Home() {
+export default async function Home({ searchParams }: { searchParams: any }) {
 
   const response: any = await GetCurrentUserFromMongoDB();
   let mongoUser: UserType | null = null;
@@ -32,13 +33,22 @@ export default async function Home() {
   // let name = currentUserData?.firstName + " " + currentUserData?.lastName;
   // let email = currentUserData?.emailAddresses[0].emailAddress;
 
+  console.log(searchParams, "searchParams");
+
+  const suspenseKey = JSON.stringify(searchParams);
+
   return (
-    <Suspense fallback={<Spinner fullHeight />}
-    // key={suspenseKey}
-    >
-      <RoomsData
-      //  searchParams={searchParams}
+    <>
+      <Filters
+        searchParams={searchParams}
       />
-    </Suspense>
+      <Suspense fallback={<Spinner fullHeight />}
+        key={suspenseKey}
+      >
+        <RoomsData
+          searchParams={searchParams}
+        />
+      </Suspense>
+    </>
   );
 }

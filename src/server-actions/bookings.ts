@@ -25,12 +25,15 @@ export const CheckRoomAvailability = async ({
             reqCheckInDate,
             reqCheckOutDate);
 
-        const reqCheckInDateObj = new Date(reqCheckInDate);
-        const reqCheckOutDateObj = new Date(reqCheckOutDate);
+        let reqCheckInDateObj = new Date(reqCheckInDate);
+        reqCheckInDateObj.setHours(0, 0, 0, 0);  // Set time to 00:00:00
+        let reqCheckOutDateObj = new Date(reqCheckOutDate);
+        reqCheckOutDateObj.setHours(23, 59, 59, 999);  // Set time to 23:59:59
 
 
         const bookedSlots = await BookingModel.findOne({
             room: roomId,
+            bookingStatus: "Booked",
             $or: [
                 {
                     checkInDate: {

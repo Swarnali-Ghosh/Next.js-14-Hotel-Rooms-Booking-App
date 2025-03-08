@@ -1,22 +1,22 @@
 import { RoomType } from "@/interfaces";
 import RoomModel from "@/models/room-model";
-// import { GetAvailableRooms } from "@/server-actions/bookings";
+import { GetAvailableRooms } from "@/server-actions/bookings";
 import Link from "next/link";
 import React from "react";
 
 async function RoomsData(
-    // { searchParams }: { searchParams: any }
+    { searchParams }: { searchParams: any }
 ) {
-    // const response = await GetAvailableRooms({
-    //     reqCheckInDate: searchParams.checkIn || "",
-    //     reqCheckOutDate: searchParams.checkOut || "",
-    //     type: searchParams.type || "",
-    // });
+    const response = await GetAvailableRooms({
+        reqCheckInDate: searchParams.checkIn || "",
+        reqCheckOutDate: searchParams.checkOut || "",
+        type: searchParams.type || "",
+    });
 
-    // const rooms: RoomType[] = response.data;
+    const rooms: RoomType[] = response.data;
 
-    const response = await RoomModel.find().populate("hotel").sort({ createdAt: -1 });
-    const rooms = await JSON.parse(JSON.stringify(response));
+    // const response = await RoomModel.find().populate("hotel").sort({ createdAt: -1 });
+    // const rooms = await JSON.parse(JSON.stringify(response));
 
     if (rooms.length === 0) {
         return <div>No rooms found</div>;
